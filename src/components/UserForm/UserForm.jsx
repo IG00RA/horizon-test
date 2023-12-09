@@ -1,6 +1,11 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
+import { StyledForm } from "./UserForm.styled";
+import {
+  DeleteButton,
+  UpdateButton,
+} from "../UserTableBody/UserTableBody.styled";
 
 const UserForm = ({ initialValues, onSubmit, text, closeModal }) => {
   const validationSchema = Yup.object({
@@ -30,8 +35,9 @@ const UserForm = ({ initialValues, onSubmit, text, closeModal }) => {
         }
       }}
     >
-      <Form>
+      <StyledForm>
         <h2>{text}</h2>
+
         <label>Name: </label>
         <Field type="text" name="name" />
         <ErrorMessage name="name">
@@ -68,8 +74,11 @@ const UserForm = ({ initialValues, onSubmit, text, closeModal }) => {
           {(msg) => <div>{Notify.failure(`Weight: ${msg}`)}</div>}
         </ErrorMessage>
 
-        <button type="submit">{text}</button>
-      </Form>
+        <UpdateButton type="submit">{text}</UpdateButton>
+        <DeleteButton type="button" onClick={closeModal}>
+          Cancel
+        </DeleteButton>
+      </StyledForm>
     </Formik>
   );
 };

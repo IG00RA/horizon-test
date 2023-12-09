@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectIsLoading, selectUsers } from "../redux/selectors";
-import { deleteUser, editUser, fetchUsers, addUser } from "../redux/operations";
-import UserForm from "./UserForm";
-import ModalContainer from "./Modal/ModalConatiner";
-import UserTableBody from "./UserTableBody";
-import LoaderMain from "./Loader/LoaderMain";
+import { selectIsLoading, selectUsers } from "../../redux/selectors";
+import {
+  deleteUser,
+  editUser,
+  fetchUsers,
+  addUser,
+} from "../../redux/operations";
+import UserForm from "../UserForm/UserForm";
+import ModalContainer from "../Modal/ModalConatiner";
+import UserTableBody from "../UserTableBody/UserTableBody";
+import LoaderMain from "../Loader/LoaderMain";
+import { AddButton, TableHead, TableRow, TableWrap } from "./UsersTable.styled";
 
 const UsersTable = () => {
   const dispatch = useDispatch();
@@ -24,8 +30,9 @@ const UsersTable = () => {
     setIsModalOpen(true);
   };
 
-  const handleDeleteUser = (userId) => {
-    dispatch(deleteUser(userId));
+  const handleDeleteUser = async (userId) => {
+    await dispatch(deleteUser(userId));
+    dispatch(fetchUsers());
   };
 
   const handleAddUser = (data) => {
@@ -44,22 +51,21 @@ const UsersTable = () => {
   };
 
   return (
-    <div>
-      <h1>Users Table</h1>
-      <button onClick={() => setAddModalOpen(true)}>Add User</button>
+    <TableWrap>
+      <AddButton onClick={() => setAddModalOpen(true)}>Add User</AddButton>
       {isLoading && <LoaderMain />}
       <table>
         <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Phone Number</th>
-            <th>Country</th>
-            <th>Height</th>
-            <th>Weight</th>
-            <th>Actions</th>
-          </tr>
+          <TableRow>
+            <TableHead>ID</TableHead>
+            <TableHead>Name</TableHead>
+            <TableHead>Surname</TableHead>
+            <TableHead>Phone Number</TableHead>
+            <TableHead>Country</TableHead>
+            <TableHead>Height</TableHead>
+            <TableHead>Weight</TableHead>
+            <TableHead>Actions</TableHead>
+          </TableRow>
         </thead>
         <UserTableBody
           users={users}
@@ -99,7 +105,7 @@ const UsersTable = () => {
           closeModal={handleCloseModal}
         />
       </ModalContainer>
-    </div>
+    </TableWrap>
   );
 };
 
