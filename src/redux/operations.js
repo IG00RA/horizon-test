@@ -2,7 +2,7 @@ import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
 
-axios.defaults.baseURL = "74.234.2.2:3001/api";
+axios.defaults.baseURL = "http://74.234.2.2:3001/api";
 
 export const fetchUsers = createAsyncThunk(
   "users/fetchAll",
